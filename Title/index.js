@@ -9,8 +9,8 @@ var app= express();
 
 mongoose.connect('mongodb://localhost/dataa',{useNewUrlParser:true});
 const db = mongoose.connection;
-db.on(console.log('mongoose is working' ))
-db.once(err => {console.log('err')});
+db.then(console.log('mongoose is working' ))
+db.catch(err => {console.log('err')});
 
 
 app.set('views', __dirname + '/views');
@@ -51,15 +51,57 @@ app.post('/goto',(req,res)=>{
 });
 
 app.post('/check',(req,res)=>{
-  var search=req.body.emailcheck;
+  var email = req.body.email
+  var password = req.body.password
 
-  var 
+  data.findOne({EmailAddress:email, Password:password},function(err,data){
+    if (err){
+      console.log(err);
+      
+    }
+    if(!data){
+      console.log("enter correct user")
+    }
+    console.log('ALL correct')
+    res.redirect('/')
+  })
+
+
+});
+
+app.get('/chng',(req,res)=>{
+  res.sendFile(path.join(__dirname + '/views/index3.html'));
 })
 
 app.get('/sign_up',(req,res)=>{
   res.sendFile(path.join(__dirname + '/views/index2.html'));
+
+})
+
+app.put('/ok',(req,res)=>{
+  currentpassword=req.body.currentpassword
+  newpassword = req.body.newpassword
+
+  data.findOne({Password:currentpassword},function(err){
+    if(err){
+      console.log(err);
+    };
+    if(true){
+      data.update({Password:newpassword},function(err,res){
+        if(err){
+          console.log(err);
+        }
+        else{
+          res.sendFile(path.join(__dirname + '/views/index2.html'));
+        }
+    res.sendFile(path.join(__dirname + '/views/index.html'));
+      })
+
+    }
+  })
+
 })
 
 app.listen(8000,()=>{
-  console.log('server is running')
+  console.log('server is running  on 8000')
 });
