@@ -78,23 +78,27 @@ app.get('/sign_up',(req,res)=>{
 
 })
 
-app.put('/ok',(req,res)=>{
+app.post('/pass',(req,res)=>{
   currentpassword=req.body.currentpassword
   newpassword = req.body.newpassword
+
 
   data.findOne({Password:currentpassword},function(err){
     if(err){
       console.log(err);
-    };
+    }
+    else{
+      console.log("Password")
+    }
     if(true){
-      data.update({Password:newpassword},function(err,res){
+      data.updateOne({Password:newpassword},function(err){
         if(err){
           console.log(err);
         }
         else{
-          res.sendFile(path.join(__dirname + '/views/index2.html'));
+          console.log('ok')
         }
-    res.sendFile(path.join(__dirname + '/views/index.html'));
+    res.redirect('/')
       })
 
     }
