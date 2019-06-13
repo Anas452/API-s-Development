@@ -62,7 +62,9 @@ app.post('/check',(req,res)=>{
     if(!data){
       console.log("enter correct user")
     }
-    console.log('ALL correct')
+    else{
+      console.log('ALL correct')
+    }
     res.redirect('/')
   })
 
@@ -78,7 +80,7 @@ app.get('/sign_up',(req,res)=>{
 
 })
 
-app.post('/pass',(req,res)=>{
+app.put('/pass',(req,res)=>{
   currentpassword=req.body.currentpassword
   newpassword = req.body.newpassword
 
@@ -104,8 +106,22 @@ app.post('/pass',(req,res)=>{
     }
   })
 
+});
+
+app.post('/fetch',(req,res)=>{
+  email=req.body.enteremail
+  console.log(email)
+  data.find({EmailAddress:email},function(err,data){
+    var a = data[0];
+    console.log(a)
+    var x = a["FirstName"]
+    var y = a["LastName"]
+    res.render(__dirname + "/views/index4.html", {x:x,y:y});
+
+  })
+  
 })
 
-app.listen(8000,()=>{
+app.listen(8080,()=>{
   console.log('server is running  on 8000')
 });
