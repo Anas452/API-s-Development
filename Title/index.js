@@ -13,6 +13,7 @@ db.then(console.log('mongoose is working' ))
 db.catch(err => {console.log('err')});
 
 
+
 app.set('views', __dirname + '/views');
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');
@@ -108,7 +109,15 @@ app.put('/pass',(req,res)=>{
 
 });
 
+app.get("/fetchData",(req,res) => {
+  res.json({
+    todo : "working todo"
+  })
+})
+
 app.post('/fetch',(req,res)=>{
+
+  
   email=req.body.enteremail
   console.log(email)
   data.find({EmailAddress:email},function(err,data){
@@ -116,10 +125,12 @@ app.post('/fetch',(req,res)=>{
     console.log(a)
     var x = a["FirstName"]
     var y = a["LastName"]
-    res.render(__dirname + "/views/index4.html", {x:x,y:y});
+    res.render(__dirname + "/views/index.html", {x:x,y:y});
 
   })
-  
+
+  // fetching();
+  // res.redirect("/")
 })
 
 app.listen(8080,()=>{
