@@ -6,7 +6,7 @@ var app= express();
 app.set('views', __dirname + '/views');
 
 
-app.get(static,'/',(req,res)=>{
+app.get('/',(req,res)=>{
   res.sendFile(path.join(__dirname + '/views/index.html'))
 })
 
